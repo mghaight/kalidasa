@@ -4,8 +4,10 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of kalidasa is to ...
+Text corpus of the works of Kalidasa, designed for text analysis. This is a
+work in progress. 
 
+<!--
 ## Installation
 
 You can install the development version of kalidasa like so:
@@ -22,4 +24,4 @@ This is a basic example which shows you how to solve a common problem:
 library(kalidasa)
 ## basic example code
 ```
-
+-->
