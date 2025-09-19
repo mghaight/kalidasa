@@ -7,6 +7,21 @@
 Text corpus of the works of Kalidasa, designed for text analysis. This is a
 work in progress. 
 
+---
+
+## Roadmap
+
+1. Works of *kāvya*
+    - [ ] *kumārasambhava*
+    - [ ] *raghuvaṃśa*
+    - [ ] *meghadūta*
+2. Works of *nāṭya*
+    - [ ] *mālavikāgnimitra*
+    - [ ] *abhijñānaśākuntala*
+    - [ ] *vikramorvaśīya*
+3. Ryder English translations
+    - [ ] Translations of Shakuntala and Other Works by Kalidasa
+
 <!--
 ## Installation
 
