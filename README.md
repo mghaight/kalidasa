@@ -7,8 +7,6 @@
 Text corpus of the works of Kalidasa, designed for text analysis. This is a
 work in progress. 
 
----
-
 ## Roadmap
 
 1. *Kāvya*s
@@ -22,7 +20,7 @@ work in progress.
 3. Ryder's English translations
     - [ ] Translations of *Shakuntala and Other Works by Kalidasa*
 
-## Attribution and Credit
+## Attribution
 
 - The raw texts and lemmata data for *kumārasambhava* and *meghadūta* were
   scraped from the [Digital Corpus of Sanskrit](http://www.sanskrit-linguistics.org/dcs/)
