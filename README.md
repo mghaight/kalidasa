@@ -22,6 +22,12 @@ work in progress.
 3. Ryder's English translations
     - [ ] Translations of *Shakuntala and Other Works by Kalidasa*
 
+## Attribution and Credit
+
+- The raw texts and lemmata data for *kumārasambhava* and *meghadūta* were
+  scraped from the [Digital Corpus of Sanskrit](http://www.sanskrit-linguistics.org/dcs/)
+  which is prepared by Oliver Hellwig and licensed under CC-BY 4.0.
+
 <!--
 ## Installation
 
