@@ -11,16 +11,16 @@ work in progress.
 
 ## Roadmap
 
-1. Works of *kāvya*
+1. *Kāvya*s
     - [ ] *kumārasambhava*
     - [ ] *raghuvaṃśa*
     - [ ] *meghadūta*
-2. Works of *nāṭya*
+2. *Nāṭaka*s
     - [ ] *mālavikāgnimitra*
     - [ ] *abhijñānaśākuntala*
     - [ ] *vikramorvaśīya*
-3. Ryder English translations
-    - [ ] Translations of Shakuntala and Other Works by Kalidasa
+3. Ryder's English translations
+    - [ ] Translations of *Shakuntala and Other Works by Kalidasa*
 
 <!--
 ## Installation
