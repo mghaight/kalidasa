@@ -52,6 +52,28 @@ for (chp in md_resp) {
   md_full <- c(md_full, chp_text)
 }
 
+# get lemmata data for Kumārasambhava
+ks_lemmata <- c()
+for (chp in ks_resp) {
+  chp_lemma <- chp |>
+    resp_body_string() |>
+    read_html() |>
+    html_elements(".analysis-word") |>
+    html_attr("lemma")
+  ks_lemmata <- c(ks_lemmata, chp_lemma)
+}
+
+# get lemmata data for Meghadūta
+md_lemmata <- c()
+for (chp in md_resp) {
+  chp_lemma <- chp |>
+    resp_body_string() |>
+    read_html() |>
+    html_elements(".analysis-word") |>
+    html_attr("lemma")
+  md_lemmata <- c(md_lemmata, chp_lemma)
+}
+
 # write vectors as files
-writeLines(ks_full, con = "../raw/ks.txt")
-writeLines(md_full, con = "../raw/md.txt")
+# writeLines(ks_full, con = "../raw/ks.txt")
+# writeLines(md_full, con = "../raw/md.txt")
