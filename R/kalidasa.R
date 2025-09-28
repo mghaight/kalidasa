@@ -1,8 +1,4 @@
-library(httr2)
-library(rvest)
-library(readr)
-library(dplyr)
-library(stringr)
+# script to scrape the DCS and build the datasets for kalidasa
 
 # dataframe includes all works from the DCS arranged
 # alphabetically and then by {book, chapter}, like so:
