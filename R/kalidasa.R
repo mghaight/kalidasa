@@ -66,10 +66,10 @@ if (file.exists("dcs_resps_html.rds")) {
 }
 
 # create a list of character vectors that contain the whole text
-if (file.exists("text_vectors.rds")) {
-  text_vectors <- readRDS("text_vectors.rds")
+if (file.exists("text_lists.rds")) {
+  text_lists <- readRDS("text_lists.rds")
 } else {
-  text_vectors <- lapply(dcs_resps_html, function(work_resps_html) {
+  text_lists <- lapply(dcs_resps_html, function(work_resps_html) {
     lapply(work_resps_html, function(resp_html) {
       resp_html |>
         rvest::read_html() |>
@@ -81,6 +81,6 @@ if (file.exists("text_vectors.rds")) {
   })
 
   # name the lists by their title from the old works vector
-  names(text_vectors) <- works
-  saveRDS(text_vectors, file = "text_vectors.rds")
+  names(text_lists) <- works
+  saveRDS(text_lists, file = "text_lists.rds")
 }
