@@ -1,5 +1,13 @@
 # script to scrape the DCS and build the datasets for kalidasa
 
+##################
+##     TODO     ##
+##################
+## Scrape the DCS texts page (http://www.sanskrit-linguistics.org/dcs/index.php?contents=texte)
+## to get ids for each text and then POST data like this mode=printchapters&textid=378 to get
+## a list of all chapterids so I don't have to work from the CSV and then the whole archive
+## can be rebuilt periodically
+
 # dataframe includes all works from the DCS arranged
 # alphabetically and then by {book, chapter}, like so:
 # chapter_id, work_title, book_num, chapter_num
