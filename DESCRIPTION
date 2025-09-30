@@ -1,6 +1,6 @@
 Package: kalidasa
 Title: Digital Archive for Sanskrit Analysis
-Version: 0.0.0.9000
+Version: 0.0.0
 Authors@R: 
     person("Mackenzie", "Haight", , "mackenzie.haight@gmail.com", role = c("aut", "cre"))
 Description: kalidasa is a repository of the data from the Digital Corpus of Sanskrit (DCS). The DCS is a Sandhi-split corpus of Sanskrit texts with full morphological and lexical analysis designed for text-historical research in Sanskrit linguistics and philology. All data was scraped from the DCS, which is prepared by Oliver Hellwig and licensed under CC-BY 4.0.
