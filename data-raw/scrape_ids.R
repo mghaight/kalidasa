@@ -19,7 +19,7 @@ dcs_ids <- httr2::request(dcs_index_url) |>
       text_id = rvest::html_attr(opts, "value", default = NA_character_)
     ) |>
       # remove the erroneous option tags so its just texts
-      dplyr::filter((title != "AMTest") & grepl("^[0-9]+$", text_id))
+      dplyr::filter(title != "AMTest")
   })() |>
   dplyr::mutate(
     # adding chapter ids to the df
