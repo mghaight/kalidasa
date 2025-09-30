@@ -4,9 +4,9 @@
 dcs_index_url <- "http://www.sanskrit-linguistics.org/dcs/index.php"
 dcs_handler_url <- "http://www.sanskrit-linguistics.org/dcs/ajax-php/ajax-text-handler-wrapper.php"
 
-# create the dcs_ids_addr dataframe
+# create the dcs_ids dataframe
 # this first request gets a list of titles and their text_ids
-dcs_ids_addr <- httr2::request(dcs_index_url) |>
+dcs_ids <- httr2::request(dcs_index_url) |>
   httr2::req_url_query(contents = "texte") |>
   httr2::req_perform() |>
   httr2::resp_body_string(encoding = "UTF-8") |>
@@ -61,4 +61,4 @@ dcs_ids_addr <- httr2::request(dcs_index_url) |>
   tibble::as_tibble()
 
 # save for other scripts to use
-saveRDS(dcs_ids_addr, file = "dcs_ids_addr.rds")
+saveRDS(dcs_ids, file = "dcs_ids.rds")

@@ -1,9 +1,9 @@
 # main script that generate the `kalidasa` R package datasets
 
-if (!file.exists("dcs_ids_addr.rds")) {
+if (!file.exists("dcs_ids.rds")) {
   source("scrape_ids.R", echo = TRUE)
 } else {
-  dcs_ids_addr <- readRDS("dcs_ids_addr.rds")
+  dcs_ids <- readRDS("dcs_ids.rds")
 }
 
 if (!file.exists("dcs_meta.rds")) {

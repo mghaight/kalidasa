@@ -21,10 +21,10 @@ genre_info <- httr2::request(dcs_index_url) |>
       stringr::str_replace_all("\\s+", "_")
   }) |>
   # remove the random texts that Oliver keeps around
-  dplyr::filter(text %in% unique(dcs_ids_addr$title)) |>
+  dplyr::filter(text %in% unique(dcs_ids$title)) |>
   dplyr::select(title = text, genre = subject)
 
-dcs_meta <- lapply(unique(dcs_ids_addr$text_id), function(id) {
+dcs_meta <- lapply(unique(dcs_ids$text_id), function(id) {
   httr2::request(dcs_index_url) |>
     # conservative throttling, but I'm not sure this will work bc of a bug
     # in httr2 described here: https://github.com/r-lib/httr2/issues/801
