@@ -7,8 +7,8 @@
 dcs_handler_url <- "http://www.sanskrit-linguistics.org/dcs/ajax-php/ajax-text-handler-wrapper.php"
 dcs_text_url <- "http://www.sanskrit-linguistics.org/dcs/index.php?contents=texte"
 
-if (file.exists("../data/dcs_ids_df.rds")) {
-  dcs_ids_df <- readRDS("../data/dcs_ids_df.rds")
+if (file.exists("dcs_ids_df.rds")) {
+  dcs_ids_df <- readRDS("dcs_ids_df.rds")
 } else {
   # create the dcs_ids_df
   # this first request gets a list of titles and their text_ids
@@ -60,5 +60,5 @@ if (file.exists("../data/dcs_ids_df.rds")) {
     tidyr::unnest(chapter_data) |>
     dplyr::select(title, short_title, text_id, maj_div, min_div, sub_div, chapter_id)
   # save for future use
-  saveRDS(dcs_ids_df, file = "../data/dcs_ids_df.rds")
+  saveRDS(dcs_ids_df, file = "dcs_ids_df.rds")
 }
