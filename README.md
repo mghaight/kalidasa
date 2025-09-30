@@ -1,4 +1,4 @@
-# kalidasa <img src="man/figures/kalidasa_logo.png" alt="kalidasa logo" align="right" height="138">
+# kalidasa <img src="man/figures/logo.png" alt="kalidasa logo" align="right" height="138">
 
 **kalidasa** is a repository of the data from the [Digital Corpus of
 Sanskrit](http://www.sanskrit-linguistics.org/dcs/), designed for programmatic
