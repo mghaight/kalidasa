@@ -1,12 +1,16 @@
 # script to scrape the DCS for text metadata
 # this script is called by kalidasa.R
 
-dcs_index_url <- "http://www.sanskrit-linguistics.org/dcs/index.php"
-dcs_handler_url <- "http://www.sanskrit-linguistics.org/dcs/ajax-php/ajax-text-handler-wrapper.php"
+
+DCS_INDEX_URL <- "http://www.sanskrit-linguistics.org/dcs/index.php"
+DCS_HANDLER_URL <- "http://www.sanskrit-linguistics.org/dcs/ajax-php/ajax-text-handler-wrapper.php"
+TIMEOUT <- 2 # this is a bandaid for a httr2::req_throttle bug
+
 
 # have to get the genre/subject in a separate request since its not
 # included on the textdetails pages
-genre_info <- httr2::request(dcs_index_url) |>
+cli::cli_h2("Fetching metadata")
+genre_info <- httr2::request(DCS_INDEX_URL) |>
   httr2::req_url_query(contents = "corpus") |>
   httr2::req_perform() |>
   httr2::resp_body_string(encoding = "UTF-8") |>
@@ -21,16 +25,18 @@ genre_info <- httr2::request(dcs_index_url) |>
       stringr::str_replace_all("\\s+", "_")
   }) |>
   # remove the random texts that Oliver keeps around
-  dplyr::filter(text %in% unique(dcs_ids$title)) |>
+  dplyr::filter(text %in% unique(dcs$title)) |>
   dplyr::select(title = text, genre = subject)
 
-dcs_meta <- lapply(unique(dcs_ids$text_id), function(id) {
-  httr2::request(dcs_index_url) |>
-    # conservative throttling, but I'm not sure this will work bc of a bug
-    # in httr2 described here: https://github.com/r-lib/httr2/issues/801
-    httr2::req_throttle(capacity = 1, fill_time_s = 2) |>
+dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
+  httr2::request(DCS_INDEX_URL) |>
     httr2::req_url_query(contents = "textdetails", IDText = id) |>
-    httr2::req_perform() |>
+    (function(req) {
+      # this is a bandaid on a httr2::req_throttle bug described here:
+      # https://github.com/r-lib/httr2/issues/801
+      Sys.sleep(TIMEOUT)
+      httr2::req_perform()
+    })() |>
     httr2::resp_body_string(encoding = "UTF-8") |>
     rvest::read_html() |>
     rvest::html_element("div#content table") |>
@@ -44,7 +50,7 @@ dcs_meta <- lapply(unique(dcs_ids$text_id), function(id) {
         stringr::str_replace_all("\\s+", "_")
     }) |>
     tibble::add_column(text_id = id, .before = 1)
-}) |>
+}, .progress = TRUE) |>
   dplyr::bind_rows() |>
   dplyr::left_join(genre_info, by = "title")
 

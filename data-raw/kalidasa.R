@@ -1,13 +1,17 @@
 # main script that generate the `kalidasa` R package datasets
 
-if (!file.exists("dcs_ids.rds")) {
-  source("scrape_ids.R", echo = TRUE)
+if (!file.exists("dcs.rds")) {
+  cli::cli_h1("Running scrape.R")
+  source("scrape.R")
 } else {
-  dcs_ids <- readRDS("dcs_ids.rds")
+  cli::cli_h1("Loading dcs.rds")
+  dcs <- readRDS("dcs.rds")
 }
 
 if (!file.exists("dcs_meta.rds")) {
-  source("dcs_meta.R", echo = TRUE)
+  cli::cli_h1("Running dcs_meta.R")
+  source("dcs_meta.R")
 } else {
+  cli::cli_h1("Loading dcs_meta.rds")
   dcs_meta <- readRDS("dcs_meta.rds")
 }
