@@ -1,16 +1,14 @@
 # script to scrape the DCS for text metadata
 # this script is called by kalidasa.R
 
-
-DCS_INDEX_URL <- "http://www.sanskrit-linguistics.org/dcs/index.php"
-DCS_HANDLER_URL <- "http://www.sanskrit-linguistics.org/dcs/ajax-php/ajax-text-handler-wrapper.php"
-TIMEOUT <- 2 # this is a bandaid for a httr2::req_throttle bug
-
+dcs_index_url <- "http://www.sanskrit-linguistics.org/dcs/index.php"
+dcs_handler_url <- "http://www.sanskrit-linguistics.org/dcs/ajax-php/ajax-text-handler-wrapper.php"
+timeout <- 1 # this is a bandaid for a httr2::req_throttle bug
 
 # have to get the genre/subject in a separate request since its not
 # included on the textdetails pages
 cli::cli_h2("Fetching metadata")
-genre_info <- httr2::request(DCS_INDEX_URL) |>
+genre_info <- httr2::request(dcs_index_url) |>
   httr2::req_url_query(contents = "corpus") |>
   httr2::req_perform() |>
   httr2::resp_body_string(encoding = "UTF-8") |>
@@ -29,12 +27,12 @@ genre_info <- httr2::request(DCS_INDEX_URL) |>
   dplyr::select(title = text, genre = subject)
 
 dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
-  httr2::request(DCS_INDEX_URL) |>
+  httr2::request(dcs_index_url) |>
     httr2::req_url_query(contents = "textdetails", IDText = id) |>
     (function(req) {
       # this is a bandaid on a httr2::req_throttle bug described here:
       # https://github.com/r-lib/httr2/issues/801
-      Sys.sleep(TIMEOUT)
+      Sys.sleep(timeout)
       httr2::req_perform()
     })() |>
     httr2::resp_body_string(encoding = "UTF-8") |>
