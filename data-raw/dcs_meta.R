@@ -60,6 +60,9 @@ dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
 ## 1) clean/normalize the digitized_by column
 ## 2) create normalized short titles for each work
 
+# drop subtitle column (not really helpful for this dataset imo)
+dcs_meta <- dplyr::select(-subtitle)
+
 # clean status information for readability
 dcs_meta <- dplyr::mutate(dcs_meta, status = dplyr::if_else(!is.na(status), "complete", "incomplete"))
 dcs_meta <- dplyr::mutate(dcs_meta, dplyr::na_if(year, 0))
