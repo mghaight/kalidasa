@@ -10,6 +10,7 @@ timeout <- 1 # this is a bandaid for a httr2::req_throttle bug
 cli::cli_h2("Fetching list of texts")
 dcs <- httr2::request(dcs_index_url) |>
   httr2::req_url_query(contents = "texte") |>
+  httr2::req_retry(max_tries = 3) |>
   httr2::req_perform() |>
   httr2::resp_body_string(encoding = "UTF-8") |>
   rvest::read_html() |>
@@ -30,6 +31,7 @@ dcs <- dplyr::mutate(dcs, chapter_data = purrr::map(text_id, function(t_id) {
   httr2::request(dcs_handler_url) |>
     httr2::req_method("POST") |>
     httr2::req_body_form(mode = "printchapters", textid = t_id) |>
+    httr2::req_retry(max_tries = 3) |>
     (function(req) {
       # this is a bandaid on a httr2::req_throttle bug described here:
       # https://github.com/r-lib/httr2/issues/801
@@ -69,6 +71,7 @@ dcs <- dplyr::mutate(dcs, resp_body = purrr::map(chapter_id, function(c_id) {
   httr2::request(dcs_handler_url) |>
     httr2::req_method("POST") |>
     httr2::req_body_form(mode = "printsentences", chapterid = c_id) |>
+    httr2::req_retry(max_tries = 3) |>
     (function(req) {
       # this is a bandaid on a httr2::req_throttle bug described here:
       # https://github.com/r-lib/httr2/issues/801

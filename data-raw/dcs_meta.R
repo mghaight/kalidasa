@@ -10,6 +10,7 @@ timeout <- 1 # this is a bandaid for a httr2::req_throttle bug
 cli::cli_h2("Fetching metadata")
 genre_info <- httr2::request(dcs_index_url) |>
   httr2::req_url_query(contents = "corpus") |>
+  httr2::req_retry(max_tries = 3) |>
   httr2::req_perform() |>
   httr2::resp_body_string(encoding = "UTF-8") |>
   rvest::read_html() |>
@@ -29,6 +30,7 @@ genre_info <- httr2::request(dcs_index_url) |>
 dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
   httr2::request(dcs_index_url) |>
     httr2::req_url_query(contents = "textdetails", IDText = id) |>
+    httr2::req_retry(max_tries = 3) |>
     (function(req) {
       # this is a bandaid on a httr2::req_throttle bug described here:
       # https://github.com/r-lib/httr2/issues/801
