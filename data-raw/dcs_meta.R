@@ -54,4 +54,28 @@ dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
   dplyr::bind_rows() |>
   dplyr::left_join(genre_info, by = "title")
 
+# Cleaning
+
+## TODO
+## 1) clean/normalize the digitized_by column
+## 2) create normalized short titles for each work
+
+# clean status information for readability
+dcs_meta <- dplyr::mutate(dcs_meta, status = dplyr::if_else(!is.na(status), "complete", "incomplete"))
+dcs_meta <- dplyr::mutate(dcs_meta, dplyr::na_if(year, 0))
+
+# adding missing genre info
+dcs_meta[which(dcs_meta$text_id == 226), ]$genre <- "Alamkarashastra" # Commentary on the Kāvyālaṃkāravṛtti
+dcs_meta[which(dcs_meta$text_id == 256), ]$genre <- "Atharvaveda" # Kauśikasūtradārilabhāṣya
+dcs_meta[which(dcs_meta$text_id == 317), ]$genre <- "Grhyasutra" # Khādiragṛhyasūtrarudraskandavyākhyā
+dcs_meta[which(dcs_meta$text_id == 572), ]$genre <- "Mimamsa" # Mīmāṃsāsūtrabhāṣya
+
+ # break up authors into list column (not sure if I want to make this choice...)
+# dcs_meta <- dplyr::mutate(dcs_meta, author = purrr::map(author, function(aut) {
+#   if (is.na(aut)) {
+#     return(NA_character_)
+#   }
+#   stringr::str_split_1(aut, ",") |> stringr::str_trim()
+# }))
+
 saveRDS(dcs_meta, file = "dcs_meta.rds")
