@@ -67,7 +67,7 @@ dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
 cli::cli_h2("Cleaning dcs_meta")
 
 # drop subtitle column (not really helpful for this dataset imo)
-# dcs_meta <- dplyr::select(-subtitle)
+dcs_meta <- dplyr::select(dcs_meta, -subtitle)
 
 # clean status information for readability
 dcs_meta <- dplyr::mutate(dcs_meta, status = dplyr::if_else(!is.na(status), "complete", "incomplete"))
