@@ -19,10 +19,12 @@ text_ids_to_cull <- c(
   379 # Abhidharmakośabhāṣya
 )
 
+cli::cli_h2("Removing incomplete texts")
 dcs_meta <- dplyr::filter(dcs_meta, !(text_id %in% text_ids_to_cull))
 dcs <- dplyr::filter(dcs, !(text_id %in% text_ids_to_cull))
 
-# preparing the raw dataset
+cli::cli_h2("Preparing dcs_raw dataset")
+# preparing the raw text dataset
 dcs_raw <- unique(dcs$text_id) |>
   purrr::set_names() |>
   purrr::map(function(t_id) {

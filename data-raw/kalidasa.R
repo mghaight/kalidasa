@@ -15,3 +15,6 @@ if (!file.exists("dcs_meta.rds")) {
   cli::cli_h1("Loading dcs_meta.rds")
   dcs_meta <- readRDS("dcs_meta.rds")
 }
+
+cli::cli_h1("Running dcs_clean.R")
+source("dcs_clean.R")
