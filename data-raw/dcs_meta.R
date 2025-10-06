@@ -31,12 +31,16 @@ dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
   httr2::request(dcs_index_url) |>
     httr2::req_url_query(contents = "textdetails", IDText = id) |>
     httr2::req_retry(max_tries = 3) |>
-    (function(req) {
-      # this is a bandaid on a httr2::req_throttle bug described here:
-      # https://github.com/r-lib/httr2/issues/801
-      Sys.sleep(timeout)
-      httr2::req_perform()
-    })() |>
+    # this is a bandaid on a httr1::req_throttle bug described here:
+    # https://github.com/r-lib/httr2/issues/801
+    # (function(req) {
+    #   Sys.sleep(timeout)
+    #   httr2::req_perform(req)
+    # })() |>
+    httr2::req_throttle(capacity = 30, fill_time_s = 60) |>
+    # dont let curl timeout
+    httr2::req_options(low_speed_limit = 0) |>
+    httr2::req_perform() |>
     httr2::resp_body_string(encoding = "UTF-8") |>
     rvest::read_html() |>
     rvest::html_element("div#content table") |>
@@ -60,12 +64,14 @@ dcs_meta <- purrr::map(unique(dcs$text_id), function(id) {
 ## 1) clean/normalize the digitized_by column
 ## 2) create normalized short titles for each work
 
+cli::cli_h2("Cleaning dcs_meta")
+
 # drop subtitle column (not really helpful for this dataset imo)
-dcs_meta <- dplyr::select(-subtitle)
+# dcs_meta <- dplyr::select(-subtitle)
 
 # clean status information for readability
 dcs_meta <- dplyr::mutate(dcs_meta, status = dplyr::if_else(!is.na(status), "complete", "incomplete"))
-dcs_meta <- dplyr::mutate(dcs_meta, dplyr::na_if(year, 0))
+dcs_meta <- dplyr::mutate(dcs_meta, dplyr::na_if(year, "0"))
 
 # adding missing genre info
 dcs_meta[which(dcs_meta$text_id == 226), ]$genre <- "Alamkarashastra" # Commentary on the Kāvyālaṃkāravṛtti
@@ -73,7 +79,7 @@ dcs_meta[which(dcs_meta$text_id == 256), ]$genre <- "Atharvaveda" # Kauśikasūt
 dcs_meta[which(dcs_meta$text_id == 317), ]$genre <- "Grhyasutra" # Khādiragṛhyasūtrarudraskandavyākhyā
 dcs_meta[which(dcs_meta$text_id == 572), ]$genre <- "Mimamsa" # Mīmāṃsāsūtrabhāṣya
 
- # break up authors into list column (not sure if I want to make this choice...)
+# break up authors into list column (not sure if I want to make this choice...)
 # dcs_meta <- dplyr::mutate(dcs_meta, author = purrr::map(author, function(aut) {
 #   if (is.na(aut)) {
 #     return(NA_character_)
