@@ -30,7 +30,7 @@ get_text <- function(t_id, ch_ids = NULL) {
   } else if (all(ch_ids %in% seq_along(unique(txt$maj_div)))) {
     ch_range <- ch_ids
   } else {
-    stop("Not a valid ch_id.")
+    stop("Not a valid chapter_id.")
   }
 
 
@@ -94,4 +94,28 @@ search_texts <- function(query) {
     dplyr::arrange(score) |>
     dplyr::filter(if (any(score == 0)) score == 0 else score < 1) |>
     dplyr::select(text_id, title)
+}
+
+
+#' Get the body of a text from a search
+#'
+#' `get_search()` chains the functionality of `get_text()` and `search_texts()`
+#' to return the text body of the first result of the search. NOTE: Users should
+#' be cautious using `get_search()` since the function does not confirm the head
+#' of the results list before getting the text body.
+#'
+#' @param query   a string query
+#'
+#' @return        a character vector of lines of the queried text
+#'
+#' @examples
+#'
+#' get_search("kumarasambhava")
+#'
+#' @export
+get_search <- function(query) {
+  search_texts(query) |>
+    head(1) |>
+    dplyr::pull(text_id) |>
+    get_text()
 }
