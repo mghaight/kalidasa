@@ -21,12 +21,12 @@ There are several helper functions to make querying the data easier. Since all
 of the texts and titles are transliterated according to the
 [IAST](https://en.wikipedia.org/wiki/International_Alphabet_of_Sanskrit_Transliteration)
 schema and encoded as UTF-8 text, **kalidasa** makes use of unique `text_id`s
-to interface with the package data. These `text_id`s are consistent with the IDs
-used in the DCS API. The function `print_titles` to list the available texts and
-their `text_id` for easy lookup. `search_texts` does a fuzzy search for text
-titles returning the top matches. `get_search` returns the `dcs_raw` data for
-the top result of a query. `get_text`---aptly---gets the `dcs_raw` data for a
-specificed `text_id` and optional chapter range.
+to interface with the package data. These `text_id`s are consistent with the
+IDs used in the DCS API. The function `print_titles` to list the available
+texts and their `text_id` for easy lookup. `search_texts` does a fuzzy search
+for text titles returning the top matches. `get_search` returns the `dcs_raw`
+data for the top result of a query. `get_text`&mdash;aptly&mdash;gets the
+`dcs_raw` data for a specificed `text_id` and optional chapter range.
 
 There is also a function `remove_stopwords` which can be called on `dcs_rich`
 or any subelement text to remove rows of data that are included in a custom
