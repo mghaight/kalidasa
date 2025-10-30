@@ -27,13 +27,12 @@ get_text <- function(t_id, ch_ids = NULL) {
 
   if (is.null(ch_ids)) {
     ch_range <- seq_along(unique(txt$maj_div))
+  } else if (all(ch_ids %in% seq_along(unique(txt$maj_div)))) {
+    ch_range <- ch_ids
   } else {
-    if (all(ch_ids %in% seq_along(unique(txt$maj_div)))) {
-      ch_range <- ch_ids
-    } else {
-      stop("Not a valid ch_id.")
-    }
+    stop("Not a valid ch_id.")
   }
+
 
   txt |>
     dplyr::filter(maj_div %in% ch_range) |>
