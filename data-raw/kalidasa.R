@@ -27,5 +27,19 @@ if (!file.exists("dcs_raw.rds")) {
 cli::cli_h1("Running dcs_clean.R")
 source("dcs_clean.R")
 
-kalidasa <- c(dcs, dcs_meta, dcs_raw)
+if (!file.exists("dcs_rich.rds")) {
+  cli::cli_h1("Running dcs_rich.R")
+  source("dcs_rich.R")
+} else {
+  cli::cli_h1("Loading dcs_rich.rds")
+  dcs_rich <- readRDS("dcs_rich.rds")
+}
+
+cli::cli_h1("Saving kalidasa datasets to kalidasa.RData")
+kalidasa <- c(
+  dcs,
+  dcs_meta,
+  dcs_raw,
+  # dcs_rich
+)
 save(kalidasa, file = "kalidasa.RData")

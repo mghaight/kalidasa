@@ -7,6 +7,16 @@ text analysis.
 > [!IMPORTANT]
 > This is a work in progress.
 
+## Installing
+
+Currently you should use the `devtools` pacakge to install **kalidasa**. When I
+sort out the final organization of the datasets I plan to submit to CRAN.
+
+```R
+# install.pacakges("devtools")
+devtools::install_github("mghaight/kalidasa")
+```
+
 ## The Project
 
 **kalidasa** includes three datasets and several helper functions. `dcs_meta`
