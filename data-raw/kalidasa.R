@@ -6,6 +6,8 @@ if (!file.exists("dcs.rds")) {
 } else {
   cli::cli_h1("Loading dcs.rds")
   dcs <- readRDS("dcs.rds")
+  cli::cli_h2("Checking if DCS dataset is up to date...")
+  source("dcs_update.R")
 }
 
 if (!file.exists("dcs_meta.rds")) {
